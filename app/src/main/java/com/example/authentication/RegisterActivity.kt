@@ -112,7 +112,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener,View.OnFocusC
                 R.id.et_fullname -> {
                     if (hasFocus){
                         if (binding.etFullname.isErrorEnabled){
-                            binding.etFullname.isErrorEnabled=true
+                            binding.etFullname.isErrorEnabled=false
                         }
                     }
                     else{
@@ -122,7 +122,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener,View.OnFocusC
                 R.id.et_email -> {
                     if (hasFocus){
                         if (binding.etEmail.isErrorEnabled){
-                            binding.etEmail.isErrorEnabled=true
+                            binding.etEmail.isErrorEnabled=false
                         }
                     }
                     else{
@@ -131,7 +131,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener,View.OnFocusC
                 }R.id.et_password -> {
                     if (hasFocus){
                         if (binding.etPassword.isErrorEnabled){
-                            binding.etPassword.isErrorEnabled=true
+                            binding.etPassword.isErrorEnabled=false
                         }
                     }
                 else{
@@ -140,7 +140,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener,View.OnFocusC
                 }R.id.et_confirmPassword -> {
                     if (hasFocus){
                         if (binding.etConfirmPassword.isErrorEnabled){
-                            binding.etConfirmPassword.isErrorEnabled=true
+                            binding.etConfirmPassword.isErrorEnabled=false
                         }
                     }
                 else{
