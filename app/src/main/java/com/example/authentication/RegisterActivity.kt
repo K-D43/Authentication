@@ -3,116 +3,118 @@ package com.example.authentication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
+import android.view.FocusFinder
 import android.view.KeyEvent
 import android.view.View
 import com.example.authentication.databinding.ActivityRegisterBinding
 
+
 class RegisterActivity : AppCompatActivity(), View.OnClickListener,View.OnFocusChangeListener, View.OnKeyListener {
-     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityRegisterBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.etFullname.onFocusChangeListener=this
-        binding.etEmail.onFocusChangeListener =this
-        binding.etPassword.onFocusChangeListener=this
-        binding.etConfirmPassword.onFocusChangeListener=this
-
+        binding.etFullname.onFocusChangeListener = this
+        binding.etEmail.onFocusChangeListener = this
+        binding.passwordEt.onFocusChangeListener = this
+        binding.confirmPasswordEt.onFocusChangeListener = this
     }
 
     private fun validatefullname():Boolean{
-        var errorMessage:String?=null
-        val value:String=binding.etFullname.editText.toString()
+        var errorMessage:String? = null
+        val value:String=binding.etFullname.text.toString()
         if (value.isEmpty()){
-            errorMessage="Name is required"
+            errorMessage="Full Name is required"
         }
-        if (errorMessage!=null){
-            binding.etFullname.apply {
-                isErrorEnabled=true
-                error=errorMessage
+        if (errorMessage != null){
+            binding.fullNameTil.apply {
+                isErrorEnabled = true
+                error= errorMessage
             }
         }
         return errorMessage == null
     }
 
-
     private fun validateemail():Boolean{
-        var errorMessage:String?=null
-        val value:String=binding.etEmail.editText.toString()
+        var errorMessage:String? = null
+        val value=binding.etEmail.text.toString()
         if (value.isEmpty()){
             errorMessage="Email is required"
         }else if(!Patterns.EMAIL_ADDRESS.matcher(value).matches()){
-            errorMessage="Email Address is invalid"
+            errorMessage="Email address is invalid"
         }
-        if (errorMessage!=null){
-            binding.etEmail.apply {
-                isErrorEnabled=true
-                error=errorMessage
+        if (errorMessage != null){
+            binding.emailTil.apply {
+                isErrorEnabled = true
+                error= errorMessage
             }
         }
         return errorMessage == null
     }
 
-
-    private fun validatepassword():Boolean{
-        var errorMessage:String?=null
-        val value=binding.etPassword.editText.toString()
+    private fun validatePassword():Boolean{
+        var errorMessage:String? = null
+        val value=binding.passwordEt.text.toString()
         if (value.isEmpty()){
             errorMessage="Password is required"
         }else if(value.length<6){
-            errorMessage="Password should be 6 characters long"
+            errorMessage="Password must be 6 characters long"
         }
-        if (errorMessage!=null){
-            binding.etPassword.apply {
-                isErrorEnabled=true
-                error=errorMessage
+        if (errorMessage != null){
+            binding.passwordTil.apply {
+                isErrorEnabled = true
+                error= errorMessage
             }
         }
         return errorMessage == null
     }
 
     private fun validateconfirmPassword():Boolean{
-        var errorMessage:String?=null
-        val pass:String=binding.etPassword.editText.toString()
-        val cpass:String=binding.etConfirmPassword.editText.toString()
-        if (cpass.isEmpty()){
+        var errorMessage:String? = null
+        val value=binding.confirmPasswordEt.text.toString()
+        if (value.isEmpty()){
             errorMessage="Confirm Password is required"
-        }else if (pass!=cpass){
-            errorMessage="Confirm Password should match with Password"
+        }else if(value.length<6){
+            errorMessage="Password must be 6 characters long"
         }
-        if (errorMessage!=null){
-            binding.etConfirmPassword.apply {
-                isErrorEnabled=true
-                error=errorMessage
+        if (errorMessage != null){
+            binding.confirmPasswordTil.apply {
+                isErrorEnabled = true
+                error= errorMessage
             }
         }
-        return errorMessage==null
-
-
-
+        return errorMessage == null
     }
-//    private fun validatePasswordAndConfirmPassword():Boolean{
-//        var error:String?= null
-//        val pass=binding.etPassword.editText.toString()
-//        val confirmPass=binding.etConfirmPassword.editText.toString()
-//        if (pass!=confirmPass){
-//            error="Confirm Password doesn't matches with Password"
-//        }
-//        return error == null
-//    }
+
+    private fun validatePasswordAndConfirmPassword():Boolean{
+        var errorMessage:String?=null
+        val password=binding.passwordEt.text.toString()
+        val confirmPassword=binding.confirmPasswordEt.text.toString()
+        if (password != confirmPassword){
+            errorMessage = "Confirm Password doesn't matches with Password"
+        }
+        if (errorMessage != null){
+            binding.confirmPasswordTil.apply {
+                isErrorEnabled = true
+                error= errorMessage
+            }
+        }
+        return errorMessage == null
+    }
 
     override fun onClick(p0: View?) {
 
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
-        if (view!=null){
+        if (view != null){
             when(view.id){
                 R.id.et_fullname -> {
                     if (hasFocus){
-                        if (binding.etFullname.isErrorEnabled){
-                            binding.etFullname.isErrorEnabled=false
+                        if (binding.fullNameTil.isErrorEnabled){
+                            binding.fullNameTil.isErrorEnabled = false
                         }
                     }
                     else{
@@ -121,98 +123,44 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener,View.OnFocusC
                 }
                 R.id.et_email -> {
                     if (hasFocus){
-                        if (binding.etEmail.isErrorEnabled){
-                            binding.etEmail.isErrorEnabled=false
+                        if (binding.emailTil.isErrorEnabled){
+                            binding.emailTil.isErrorEnabled = false
                         }
                     }
                     else{
                         validateemail()
                     }
-                }R.id.et_password -> {
+                }
+                R.id.password_et -> {
                     if (hasFocus){
-                        if (binding.etPassword.isErrorEnabled){
-                            binding.etPassword.isErrorEnabled=false
+                        if (binding.passwordTil.isErrorEnabled){
+                            binding.passwordTil.isErrorEnabled = false
                         }
                     }
-                else{
-                    validatepassword()
+                    else{
+                        validatePassword()
                     }
-                }R.id.et_confirmPassword -> {
+                }
+                R.id.confirmPassword_et -> {
                     if (hasFocus){
-                        if (binding.etConfirmPassword.isErrorEnabled){
-                            binding.etConfirmPassword.isErrorEnabled=false
+                        if (binding.confirmPasswordTil.isErrorEnabled){
+                            binding.confirmPasswordTil.isErrorEnabled = false
                         }
                     }
-                else{
-                    validateconfirmPassword()
+                    else{
+                        if(validateconfirmPassword() && validatePassword() && validatePasswordAndConfirmPassword()){
+                            if (binding.passwordTil.isErrorEnabled){
+                                binding.passwordTil.isErrorEnabled = false
+                            }
+                            binding.confirmPasswordTil.setStartIconDrawable(R.drawable.ic_check)
+                        }
                     }
                 }
             }
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-//    override fun onFocusChange(view: View?, hasFocus: Boolean) {
-//        if (view!=null){
-//            when(view.id){
-//                R.id.et_fullname -> {
-//                    if (hasFocus){
-//                        if (binding.etFullname.isErrorEnabled){
-//                            binding.etFullname.isErrorEnabled = false
-//                        }
-//
-//                    }else{
-//                        validateFullName()
-//                    }
-//                }
-//                R.id.et_email -> {
-//                    if (hasFocus){
-//                        if (binding.etEmail.isErrorEnabled){
-//                            binding.etEmail.isErrorEnabled = false
-//                        }
-//
-//                    }else{
-//                        validateemail()
-//                    }
-//
-//                }
-//                R.id.et_password -> {
-//                    if (hasFocus){
-//                        if (binding.etPassword.isErrorEnabled){
-//                            binding.etPassword.isErrorEnabled = false
-//                        }
-//
-//                    }else{
-//                        validatepassword()
-//                    }
-//
-//                }
-//                R.id.et_confirmPassword -> {
-//                    if (hasFocus){
-//                        if (binding.etConfirmPassword.isErrorEnabled){
-//                            binding.etConfirmPassword.isErrorEnabled = false
-//                        }
-//
-//                    }else{
-//                        validateConfirmPassword()
-//                    }
-//
-//                }
-//            }
-//        }
-//    }
-
-    override fun onKey(view: View?, event: Int, keyEvent: KeyEvent?): Boolean {
+    override fun onKey(view: View?, event: Int, key: KeyEvent?): Boolean {
         return false
     }
 }
