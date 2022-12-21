@@ -1,5 +1,7 @@
 package com.example.authentication
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
@@ -138,7 +140,9 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener,View.OnFocusC
                         }
                     }
                     else{
-                        validatePassword()
+                        if(validatePassword()){
+//                            do validation for its uniqueness
+                        }
                     }
                 }
                 R.id.confirmPassword_et -> {
@@ -152,7 +156,13 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener,View.OnFocusC
                             if (binding.passwordTil.isErrorEnabled){
                                 binding.passwordTil.isErrorEnabled = false
                             }
-                            binding.confirmPasswordTil.setStartIconDrawable(R.drawable.ic_check)
+                            else{
+                                binding.confirmPasswordTil.apply{
+                                    setStartIconDrawable(R.drawable.ic_check)
+                                    setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+                                }
+                            }
+
                         }
                     }
                 }
